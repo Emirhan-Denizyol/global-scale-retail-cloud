@@ -2,6 +2,7 @@
 set -euo pipefail
 
 RESOURCE_GROUP="${AZURE_RESOURCE_GROUP:-rg-global-retail-prod}"
+LOCATION="${AZURE_LOCATION:-francecentral}"
 TEMPLATE_SPEC_NAME="${TEMPLATE_SPEC_NAME:-global-retail-template-spec}"
 VERSION="${TEMPLATE_SPEC_VERSION:-1.0}"
 
@@ -27,5 +28,6 @@ az deployment group create \
   --resource-group "${RESOURCE_GROUP}" \
   --template-spec "${TEMPLATE_SPEC_ID}" \
   --parameters @azure-templates/parameters.dev.json \
+  --parameters location="${LOCATION}" \
   --parameters allowedPublicIp="${ALLOWED_PUBLIC_IP}" \
   --parameters sqlAdminPassword="${SQL_ADMIN_PASSWORD}"
