@@ -1,0 +1,37 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraform.lock.hcl
+
+# Secrets
+.env
+*.pem
+*.key
+*.p12
+*.pfx
+credentials
+credentials.json
+service-account.json
+*.auto.tfvars
+
+# Azure
+.azure/
+*.azcli
+
+# macOS
+.DS_Store
+
+# Screenshots are allowed
+!screenshots/
+!screenshots/**
+
+# Safe parameter samples are allowed
+!parameters.dev.json
