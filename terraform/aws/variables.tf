@@ -1,7 +1,7 @@
 variable "aws_region" {
   description = "AWS region where the infrastructure will be deployed."
   type        = string
-  default     = "eu-north-1"
+  default     = "us-east-1"
 }
 
 variable "project_name" {
@@ -49,7 +49,7 @@ variable "private_subnet_cidrs" {
 variable "ec2_instance_type" {
   description = "EC2 instance type for private web servers."
   type        = string
-  default     = "t3.micro"
+  default     = "t2.micro"
 }
 
 variable "asg_min_size" {

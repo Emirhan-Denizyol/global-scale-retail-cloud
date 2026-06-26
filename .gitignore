@@ -34,3 +34,6 @@ service-account.json
 
 # Safe parameter samples are allowed
 !parameters.dev.json
+
+# Local/generated Terraform backend config
+terraform/aws/backend.tf
