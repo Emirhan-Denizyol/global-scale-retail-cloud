@@ -1,29 +1,35 @@
-@description('Required tag names.')
-param requiredTags array = [
-  'Environment'
-  'Owner'
-  'CostCenter'
-]
+targetScope = 'subscription'
+
+@description('Custom policy definition name.')
+param policyDefinitionName string = 'require-global-retail-tags'
+
+@description('Policy assignment name.')
+param policyAssignmentName string = 'assign-global-retail-required-tags'
 
 resource requireTagsPolicy 'Microsoft.Authorization/policyDefinitions@2023-04-01' = {
-  name: 'require-global-retail-tags'
+  name: policyDefinitionName
   properties: {
-    displayName: 'Require Global Retail mandatory tags'
-    description: 'Requires Environment, Owner, and CostCenter tags on resources.'
+    policyType: 'Custom'
     mode: 'Indexed'
+    displayName: 'Require mandatory Global Retail tags'
+    description: 'Requires Environment, Owner, and CostCenter tags on Azure resources.'
+    metadata: {
+      category: 'Tags'
+    }
+    parameters: {}
     policyRule: {
       if: {
         anyOf: [
           {
-            field: '[concat(''tags['', parameters(''requiredTags'')[0], '']'')]'
+            field: 'tags[Environment]'
             exists: 'false'
           }
           {
-            field: '[concat(''tags['', parameters(''requiredTags'')[1], '']'')]'
+            field: 'tags[Owner]'
             exists: 'false'
           }
           {
-            field: '[concat(''tags['', parameters(''requiredTags'')[2], '']'')]'
+            field: 'tags[CostCenter]'
             exists: 'false'
           }
         ]
@@ -32,15 +38,23 @@ resource requireTagsPolicy 'Microsoft.Authorization/policyDefinitions@2023-04-01
         effect: 'deny'
       }
     }
-    parameters: {
-      requiredTags: {
-        type: 'Array'
-        metadata: {
-          displayName: 'Required tags'
-        }
+  }
+}
+
+resource requireTagsAssignment 'Microsoft.Authorization/policyAssignments@2023-04-01' = {
+  name: policyAssignmentName
+  properties: {
+    displayName: 'Assign mandatory Global Retail tag policy'
+    description: 'Assigns the mandatory tag policy at subscription scope.'
+    policyDefinitionId: requireTagsPolicy.id
+    enforcementMode: 'Default'
+    nonComplianceMessages: [
+      {
+        message: 'Resources must include Environment, Owner, and CostCenter tags.'
       }
-    }
+    ]
   }
 }
 
 output policyDefinitionId string = requireTagsPolicy.id
+output policyAssignmentId string = requireTagsAssignment.id

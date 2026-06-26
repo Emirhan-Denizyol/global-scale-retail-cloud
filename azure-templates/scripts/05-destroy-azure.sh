@@ -8,4 +8,10 @@ az group delete \
   --yes \
   --no-wait
 
-echo "Delete requested for resource group: ${RESOURCE_GROUP}"
+az policy assignment delete \
+  --name assign-global-retail-required-tags || true
+
+az policy definition delete \
+  --name require-global-retail-tags || true
+
+echo "Delete requested for resource group and subscription-level tag policy cleanup completed."
