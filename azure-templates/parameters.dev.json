@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "projectName": {
+      "value": "global-retail"
+    },
+    "environment": {
+      "value": "Prod"
+    },
+    "owner": {
+      "value": "Master-Grad"
+    },
+    "costCenter": {
+      "value": "101"
+    },
+    "allowedPublicIp": {
+      "value": "REPLACE_WITH_YOUR_PUBLIC_IP"
+    },
+    "sqlAdminUser": {
+      "value": "sqladminuser"
+    }
+  }
+}
